@@ -43,13 +43,19 @@ def analyze_execution_time(plot_path, func, params_list, runs=10):
     """
     times = []
     
-    # Measure execution time for each set of parameters
+   # Measure execution time for each set of parameters
     for params in params_list:
         avg_time = average_execution_time(func, *params, runs=runs)
         times.append(avg_time)
     
     # Plot the results
-    plt.plot([params[0] for params in params_list], times, marker='o')  # Assuming the first param is the one growing
+    input_sizes = [params[0] for params in params_list]  # Assuming the first param is the input size
+    plt.plot(input_sizes, times, marker='o')
+
+    # Annotate each point with its coordinates
+    for i, (x, y) in enumerate(zip(input_sizes, times)):
+        plt.text(x, y, f"({x}, {y:.3f})", fontsize=9, ha='left')
+
     plt.title(f'Execution Time Analysis of {func.__name__}')
     plt.xlabel('Input Size')
     plt.ylabel('Average Time (seconds)')
@@ -59,14 +65,14 @@ def analyze_execution_time(plot_path, func, params_list, runs=10):
     return times
 
 '''
-Example Usage
+# Example Usage
 def example_function(n):
     total = 0
     for i in range(n):
         total += i
     return total
 
-Analyze execution times for increasing input sizes
+# Analyze execution times for increasing input sizes
 params_list = [(1000,), (5000,), (10000,), (50000,), (100000,)]
 analyze_execution_time("./plots/test.png", example_function, params_list, runs=10)
 '''
