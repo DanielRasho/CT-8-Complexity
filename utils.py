@@ -58,14 +58,15 @@ def analyze_execution_time(plot_path, func, params_list, runs=10):
 
     return times
 
-# Example Usage
+'''
+Example Usage
 def example_function(n):
     total = 0
     for i in range(n):
         total += i
     return total
 
-# Analyze execution times for increasing input sizes
+Analyze execution times for increasing input sizes
 params_list = [(1000,), (5000,), (10000,), (50000,), (100000,)]
 analyze_execution_time("./plots/test.png", example_function, params_list, runs=10)
-
+'''
