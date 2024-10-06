@@ -43,27 +43,31 @@ def analyze_execution_time(plot_path, func, params_list, runs=10):
     """
     times = []
     
-   # Measure execution time for each set of parameters
+    # Measure execution time for each set of parameters
     for params in params_list:
         avg_time = average_execution_time(func, *params, runs=runs)
         times.append(avg_time)
     
     # Plot the results
     input_sizes = [params[0] for params in params_list]  # Assuming the first param is the input size
-    plt.plot(input_sizes, times, marker='o')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(input_sizes, times, marker='o')
 
-    # Annotate each point with its coordinates
-    for i, (x, y) in enumerate(zip(input_sizes, times)):
-        plt.text(x, y, f"({x}, {y:.3f})", fontsize=9, ha='left')
+    # Create a table at the bottom
+    table_data = list(zip(input_sizes, times))
+    table = ax.table(cellText=table_data, colLabels=['Input Size', 'Average Time (seconds)'],
+                     cellLoc='center', loc='bottom', bbox=[0.1, -0.5, 0.8, 0.3])
 
-    plt.title(f'Execution Time Analysis of {func.__name__}')
-    plt.xlabel('Input Size')
-    plt.ylabel('Average Time (seconds)')
-    plt.grid(True)
-    plt.savefig(plot_path)
+    # Adjust the plot limits and aesthetics
+    ax.set_title(f'Execution Time Analysis of {func.__name__}')
+    ax.set_xlabel('Input Size')
+    ax.set_ylabel('Average Time (seconds)')
+    ax.grid(True)
+
+    # Save the figure as an image file
+    plt.savefig(plot_path, bbox_inches='tight')  # Save the figure including the table
 
     return times
-
 '''
 # Example Usage
 def example_function(n):
