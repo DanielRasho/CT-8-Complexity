@@ -35,17 +35,19 @@ def analyze_execution_time(plot_path, func, params_list, runs=10):
     return times
 
 # Lista de tamaños de entrada para las pruebas
-inputs = [(1,), (10,), (100,), (1000,)]  # Lista de tamaños de entrada
+inputs = [(1,), (10,), (100,), (1000,), (10000,), (100000,)]  # Lista de tamaños de entrada original
+# inputs = [(1,), (10,), (100,), (1000,)]  # Lista test
 
 # Graficar los tiempos de ejecución de function_1
-analyze_execution_time("./plots/function_1_execution_time.png", function_1, inputs, runs=10)
+print("====REALIZANDO GRAFICAS INTUT VS TIEMPO====")
+analyze_execution_time("./plots/test_function1.png", function_1, inputs, runs=10)
 
 # Graficar los tiempos de ejecución de function_2
-analyze_execution_time("./plots/function_2_execution_time.png", function_2, inputs, runs=10)
+analyze_execution_time("./plots/test_function2.png", function_2, inputs, runs=10)
 
 # Graficar los tiempos de ejecución de function_3
-analyze_execution_time("./plots/function_3_execution_time.png", function_3, inputs, runs=10)
-
+analyze_execution_time("./plots/test_function3.png", function_3, inputs, runs=10)
+print("====FINALIZANDO GRAFICAS INTUT VS TIEMPO====")
 
 '''
 # Example Usage
