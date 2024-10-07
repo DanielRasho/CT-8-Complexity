@@ -1,73 +1,52 @@
 import time
-import matplotlib
 import matplotlib.pyplot as plt
+from problem1 import function_1  # Importa function_1 desde problem1.py
+from problem2 import function_2  # Importa function_2 desde problem2.py
+from problem3 import function_3  # Importa function_3 desde problem3.py
 
 def average_execution_time(func, *args, runs=10, **kwargs):
-    """
-    Measures the average execution time of a function over a number of runs.
-
-    Parameters:
-    func: function to time
-    *args: positional arguments for the function
-    runs: how many times to run the function (default is 10)
-    **kwargs: keyword arguments for the function
-
-    Returns:
-    Average execution time in seconds
-    """
     total_time = 0.0
-
-    # Measure execution time over multiple runs
     for _ in range(runs):
         start_time = time.time()
         func(*args, **kwargs)
         end_time = time.time()
-
         total_time += (end_time - start_time)
-
-    # Calculate average time
-    avg_time = total_time / runs
-    return avg_time
+    return total_time / runs
 
 def analyze_execution_time(plot_path, func, params_list, runs=10):
-    """
-    Analyzes the average execution time of a function with different parameters and plots the results.
-
-    Parameters:
-    func: function to time
-    params_list: a list of tuples containing the parameters for each run
-    runs: how many times to run the function for each parameter set (default is 10)
-    
-    Returns:
-    A list of average execution times for each parameter set
-    """
     times = []
-    
-    # Measure execution time for each set of parameters
     for params in params_list:
         avg_time = average_execution_time(func, *params, runs=runs)
         times.append(avg_time)
-    
-    # Plot the results
-    input_sizes = [params[0] for params in params_list]  # Assuming the first param is the input size
+
+    input_sizes = [params[0] for params in params_list]
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(input_sizes, times, marker='o')
-
-    # Create a table at the bottom
     table_data = list(zip(input_sizes, times))
     table = ax.table(cellText=table_data, colLabels=['Input Size', 'Average Time (seconds)'],
                      cellLoc='center', loc='bottom', bbox=[0.1, -0.5, 0.8, 0.3])
-
-    # Adjust the plot limits and aesthetics
     ax.set_title(f'Execution Time Analysis of {func.__name__}')
     ax.set_xlabel('Input Size')
     ax.set_ylabel('Average Time (seconds)')
     ax.grid(True)
-
-    # Save the figure as an image file
-    plt.savefig(plot_path, bbox_inches='tight')  # Save the figure including the table
+    plt.savefig(plot_path, bbox_inches='tight')
+    plt.show()
 
     return times
+
+# Lista de tamaños de entrada para las pruebas
+inputs = [(1,), (10,), (100,), (1000,)]  # Lista de tamaños de entrada
+
+# Graficar los tiempos de ejecución de function_1
+analyze_execution_time("./plots/function_1_execution_time.png", function_1, inputs, runs=10)
+
+# Graficar los tiempos de ejecución de function_2
+analyze_execution_time("./plots/function_2_execution_time.png", function_2, inputs, runs=10)
+
+# Graficar los tiempos de ejecución de function_3
+analyze_execution_time("./plots/function_3_execution_time.png", function_3, inputs, runs=10)
+
+
 '''
 # Example Usage
 def example_function(n):
